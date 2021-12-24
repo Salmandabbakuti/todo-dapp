@@ -15,7 +15,7 @@ const notify = Notify({
 // const abi = [
 //   "function addTodo(string calldata _task)",
 //   "function markTodoAsComplete(uint _id)",
-//   "function getMyTodos() public view returns (tuple(uint, string, uint, bool)[])",
+//   "function getMyTodos() view returns (tuple(uint256,string,uint256,bool)[])",
 // ]
 const abi = [{ "inputs": [{ "internalType": "string", "name": "_task", "type": "string" }], "name": "addTodo", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_id", "type": "uint256" }], "name": "markTodoAsCompleted", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "getMyTodos", "outputs": [{ "components": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "string", "name": "task", "type": "string" }, { "internalType": "uint256", "name": "createdAt", "type": "uint256" }, { "internalType": "bool", "name": "isCompleted", "type": "bool" }], "internalType": "struct TodoList.Todo[]", "name": "", "type": "tuple[]" }], "stateMutability": "view", "type": "function" }];
 
@@ -86,7 +86,7 @@ export default function App() {
           console.error('Wrong Network. Please connect to the Ropsten testnet');
           return
         }
-        const contract = new Contract('0xFeA5070f0a28733Ff519Dd8BC1A73B1947BDd1BE', abi, signer);
+        const contract = new Contract('0x0bb2Eebadd4361ca757FEddb59989Ab2e9b9f246', abi, signer);
         setContract(contract);
         const todos = await contract.getMyTodos();
         setTodos(todos);

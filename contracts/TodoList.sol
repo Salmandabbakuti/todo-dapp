@@ -3,8 +3,6 @@ pragma solidity ^0.8.3;
 
 contract TodoList {
 
-    uint todoId;
-
     struct Todo {
         uint id;
         string task;
@@ -16,8 +14,7 @@ contract TodoList {
 
 
     function addTodo(string calldata _task) public {
-        todos[msg.sender].push(Todo(todoId, _task, block.timestamp, false));
-        todoId++;
+        todos[msg.sender].push(Todo(todos[msg.sender].length, _task, block.timestamp, false));
     }
 
     function markTodoAsCompleted(uint _id) public {
