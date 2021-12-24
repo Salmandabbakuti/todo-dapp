@@ -12,12 +12,11 @@ const notify = Notify({
   darkMode: true
 });
 
-// const abi = [
-//   "function addTodo(string calldata _task)",
-//   "function markTodoAsComplete(uint _id)",
-//   "function getMyTodos() view returns (tuple(uint256,string,uint256,bool)[])",
-// ]
-const abi = [{ "inputs": [{ "internalType": "string", "name": "_task", "type": "string" }], "name": "addTodo", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_id", "type": "uint256" }], "name": "markTodoAsCompleted", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "getMyTodos", "outputs": [{ "components": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "string", "name": "task", "type": "string" }, { "internalType": "uint256", "name": "createdAt", "type": "uint256" }, { "internalType": "bool", "name": "isCompleted", "type": "bool" }], "internalType": "struct TodoList.Todo[]", "name": "", "type": "tuple[]" }], "stateMutability": "view", "type": "function" }];
+const abi = [
+  "function addTodo(string _task)",
+  "function markTodoAsCompleted(uint256 _id)",
+  "function getMyTodos() view returns (tuple(uint256 id, string task, uint256 createdAt, bool isCompleted)[])",
+];
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -106,7 +105,7 @@ export default function App() {
           {new Date(todo.createdAt * 1000).toLocaleString()}
         </div>
         <div className="icons">
-          {!todo.isCompleted && < TiTick className='edit-icon' onClick={() => { handleMarkTodoAsCompleted(todo.id) }} />}
+          {!todo.isCompleted && < TiTick className='edit-icon' onClick={() => handleMarkTodoAsCompleted(todo.id)} />}
         </div>
       </div>
     ))
@@ -126,7 +125,19 @@ export default function App() {
           />
           <button className="todo-button">Add todo</button>
         </form>
-        <Todo todos={todos} />
+        {todos.map((todo, index) => (
+          <div className={todo.isCompleted ? 'todo-row complete' : 'todo-row'} key={index}>
+            <div key={todo.id}>
+              {todo.task}
+            </div>
+            <div>
+              {new Date(todo.createdAt * 1000).toLocaleString()}
+            </div>
+            <div className="icons">
+              {!todo.isCompleted && < TiTick className='edit-icon' onClick={() => handleMarkTodoAsCompleted(todo.id)} />}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
