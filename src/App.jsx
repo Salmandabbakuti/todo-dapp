@@ -95,21 +95,6 @@ export default function App() {
     init().catch((error) => console.error(error));
   }, []);
 
-  const Todo = ({ todos }) => {
-    return todos.map((todo, index) => (
-      <div className={todo.isCompleted ? 'todo-row complete' : 'todo-row'} key={index}>
-        <div key={todo.id}>
-          {todo.task}
-        </div>
-        <div>
-          {new Date(todo.createdAt * 1000).toLocaleString()}
-        </div>
-        <div className="icons">
-          {!todo.isCompleted && < TiTick className='edit-icon' onClick={() => handleMarkTodoAsCompleted(todo.id)} />}
-        </div>
-      </div>
-    ))
-  }
   return (
     <div className="todo-app">
       <div>
