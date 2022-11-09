@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ethers, Contract } from 'ethers';
-import { TiTick } from 'react-icons/ti'
-import Notify from 'bnc-notify'
+import { TiTick } from 'react-icons/ti';
+import Notify from 'bnc-notify';
 import './App.css';
 
 
@@ -81,17 +81,25 @@ export default function App() {
         const { chainId } = await provider.getNetwork();
         console.log('chainId:', chainId);
         const signer = provider.getSigner();
-        if (chainId !== 3) {
-          console.error('Wrong Network. Please connect to the Ropsten testnet');
-          return
+        if (chainId !== 80001) {
+          alert('Wrong Network. Please connect to the Polygon testnet');
+          // switch to the polygon testnet
+          window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x13881' }],
+          }).catch((err) => {
+            console.error(err.message);
+          });
+          return;
+
         }
-        const contract = new Contract('0x0bb2Eebadd4361ca757FEddb59989Ab2e9b9f246', abi, signer);
+        const contract = new Contract('0x8C2c36Bdfaf7fCfd1c78114f6C3BDa1A485b8f6D', abi, signer);
         setContract(contract);
         const todos = await contract.getMyTodos();
         setTodos(todos);
         console.log(todos);
       }
-    }
+    };
     init().catch((error) => console.error(error));
   }, []);
 
